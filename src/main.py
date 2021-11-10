@@ -3,7 +3,9 @@ from default import create_parser
 from oh_my_zsh.install import install
 
 config = {}
-options = {}
+
+opt_parser = create_parser("tasks router runner")
+options = opt_parser.parse_args()
 
 router = Router(config, options,
     router=Router(
@@ -12,8 +14,7 @@ router = Router(config, options,
             config, options,
             ohmyzsh = install)))
 
-opt_parser = create_parser(router, "tasks router runner")
-args = opt_parser.parse_args()
+
 
 if __name__ == "__main__":
     if args.tasks:

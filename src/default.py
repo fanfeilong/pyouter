@@ -1,6 +1,6 @@
 import argparse
 
-def create_parser(router, description, tasks="tasks"):
+def create_parser(description, tasks="tasks"):
     opt_parser = argparse.ArgumentParser(description=description)
     opt_parser.add_argument('action', metavar='A', type=str, nargs='?',
                         help='actions strings in tree')

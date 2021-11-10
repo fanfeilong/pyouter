@@ -1,4 +1,5 @@
 import string
+import os
 import os.path
 
 def install():
@@ -13,7 +14,8 @@ _pipeline() {
 
 compdef _pipeline python actions.py
 """)
-    plugin_dir = "/Users/mars/.oh-my-zsh/plugins/tasks-router"
+    home = os.getenv("HOME")
+    plugin_dir = os.path.join(home, ".oh-my-zsh/plugins/tasks-router")
     plugin_path = os.path.join(plugin_dir, "tasks-router.plugin.zsh")
     if not os.path.exists(plugin_dir):
         os.mkdir(plugin_dir)

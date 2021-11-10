@@ -2,7 +2,8 @@ import string
 import os
 import os.path
 
-def install():
+
+def install(config, options):
     command = string.Template("""#compdef
 
 _pipeline() {

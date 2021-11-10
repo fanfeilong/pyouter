@@ -1,0 +1,10 @@
+#compdef
+
+_pipeline() {
+    compls=$(python main.py --tasks)
+
+    completions=(${=compls})
+    compadd -- $completions
+}
+
+compdef _pipeline python actions.py

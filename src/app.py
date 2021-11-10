@@ -24,6 +24,6 @@ class App(object):
         if self.options.tasks:
             for task in self.router.tasks():
                 print(task)
-
-        self.router.dispatch(self.options.action)
+        else:
+            self.router.dispatch(self.options.action)
         return self

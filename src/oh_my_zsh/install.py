@@ -14,8 +14,9 @@ _pipeline() {
     compadd -- $$completions
 }
 
-compdef _pipeline python actions.py
+compdef _pipeline $script
 """)
+    script_name = options.script if options.script else "main.py"
     home = os.getenv("HOME")
     plugin_name = "tasks-router"
     plugin_dir = os.path.join(home, ".oh-my-zsh/plugins", plugin_name)
@@ -40,7 +41,7 @@ compdef _pipeline python actions.py
             zshrc_content = prev + plugins_setting + post
 
     with open(plugin_path, "w+") as f:
-        f.write(command.substitute(script="main.py"))
+        f.write(command.substitute(script=script_name))
 
     with open(zshrc, "w+") as f:
         f.write(zshrc_content)

@@ -10,7 +10,7 @@ class App(object):
         opt_parser = create_parser("tasks router runner")
         self.options = opt_parser.parse_args()
         self.config = {}
-        self.router: Router = None
+        self.router: Router
 
     def use(self, router: Router):
         self.router = router

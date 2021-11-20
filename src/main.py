@@ -5,6 +5,7 @@ from oh_my_zsh.install import install as omz
 from fish.install import install as fish
 from app import App
 
+
 if __name__ == "__main__":
     app = App()
     app.use(

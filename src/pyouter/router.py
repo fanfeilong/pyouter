@@ -1,4 +1,4 @@
-from errors import NotFound
+from .errors import NotFound
 
 
 class Router(object):

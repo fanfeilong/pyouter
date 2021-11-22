@@ -4,8 +4,8 @@ import os.path
 
 
 def install(config, options):
-    command = string.Template("""#!/usr/bin/env bash
-# please save this script into your bash completion dir and restart 
+    command = string.Template("""#!/usr/bin/env pyouter.bash
+# please save this script into your pyouter.bash completion dir and restart 
 # your base or source it use
 # . script_name
 # in MacOS with home brew, it is /usr/local/etc/bash_completion.d/

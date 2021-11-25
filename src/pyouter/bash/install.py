@@ -1,7 +1,4 @@
 import string
-import os
-import os.path
-
 
 def install(config, options):
     command = string.Template("""#!/usr/bin/env pyouter.bash
@@ -17,6 +14,6 @@ _completion_router()
 
 complete -F _completion_router $script
 """)
-    script_name = options.script if options.script else "main.py"
+    script_name = options.script if options.script else "__main__.py"
     content = command.substitute(script=script_name)
     print(content)

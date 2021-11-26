@@ -3,6 +3,9 @@ Pyouter is a tasks router by  hierarchy and layered tasks, which may come from c
 
 ## What's new
 
+### 0.04
+ - custom parser 
+
 ### 0.0.3
  - support pyouter completion
  - pyouter as entry points of package

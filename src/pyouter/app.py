@@ -1,13 +1,12 @@
 
-
 from pyouter.default import create_parser
 from pyouter.errors import NotInit
 from pyouter.router import Router
 
 
 class App(object):
-    def __init__(self, **args):
-        opt_parser = create_parser("tasks router runner")
+    def __init__(self, parser=None):
+        opt_parser = create_parser("tasks router runner") if parser is None else parser
         self.options = opt_parser.parse_args()
         self.config = {}
         self.router: Router

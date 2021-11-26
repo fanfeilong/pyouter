@@ -5,7 +5,7 @@ Pyouter is a tasks router by  hierarchy and layered tasks, which may come from c
 
 ## INSTALL
 
-first, install pyouter
+First, install pyouter
 
 ```shell
 pip install pyouter

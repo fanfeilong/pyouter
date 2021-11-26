@@ -3,6 +3,14 @@ Pyouter is a tasks router by  hierarchy and layered tasks, which may come from c
 
 ## What's new
 
+### 0.0.6
+
+ - fixed bug in fish completion install
+
+### 0.0.5
+
+ - pass config if need
+
 ### 0.04
  - custom parser 
 

@@ -5,10 +5,10 @@ from pyouter.router import Router
 
 
 class App(object):
-    def __init__(self, parser=None):
+    def __init__(self, config=None, parser=None):
         opt_parser = create_parser("tasks router runner") if parser is None else parser
         self.options = opt_parser.parse_args()
-        self.config = {}
+        self.config = {} if config is None else config
         self.router: Router
 
     def use(self, router: Router):

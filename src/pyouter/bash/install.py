@@ -7,6 +7,14 @@ def install(config, options):
 # . script_name
 # in MacOS with home brew, it is /usr/local/etc/bash_completion.d/
 
+_pipeline_router()
+{
+   COMPREPLY=($(compgen -W "$$(pyouter --tasks)" "$${COMP_WORDS[1]}"))
+}
+
+complete -F _pipeline_router pyouter
+
+# if you has used pyouter any old edition, maybe just use below source
 _completion_router()
 {
    COMPREPLY=($(compgen -W "$$(python $script --tasks)" "$${COMP_WORDS[1]}"))

@@ -29,6 +29,10 @@ Default script name is `main.py` 。Now it support bash, fish and zsh with oh-my
 
 ## What's new
 
+### 0.0.7
+
+ - add pyouter self completion of bash and fish 
+
 ### 0.0.6
 
  - fixed bug in fish completion install

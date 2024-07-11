@@ -2,6 +2,7 @@ from typing import Any
 from pyouter.app import App
 from pyouter.router import Router
 
+import json
 
 def hello(config, options):
     print("hello function")
@@ -16,7 +17,9 @@ class Hello:
         self.inner()
     
     def inner(self):
-        print("hello class object")
+        print(f"hello class object, self.options.debug:{self.options.debug}")
+        if self.options.debug:
+            print('debug')
     
 
 def runner():
@@ -28,7 +31,16 @@ def runner():
         * python test.py test.hello.func
         * python test.py test.hello.obj
     '''
-    app = App()
+    
+    app = App(config='config.json')
+    
+    app.option(
+        '-d', '--debug',
+        dest='debug',
+        action="store_true",
+        help='debug'
+    )
+    
     app.use(
         router=Router(
             test=Router(
@@ -39,6 +51,8 @@ def runner():
             )
         )
     )
+    
+    print("run")
     app.run()
     
 if __name__=="__main__":

@@ -1,9 +1,6 @@
 from typing import Any
 from pyouter.app import App
 from pyouter.router import Router
-from pyouter.oh_my_zsh.install import install as omz
-from pyouter.fish.install import install as fish
-from pyouter.bash.install import install as bash
 
 
 def hello(config, options):

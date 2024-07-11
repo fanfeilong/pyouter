@@ -4,7 +4,7 @@ from pyouter.router import Router
 
 
 def hello(config, options):
-    print("hello")
+    print("hello function")
 
 class Hello:
     def __init__(self) -> None:
@@ -16,7 +16,7 @@ class Hello:
         self.inner()
     
     def inner(self):
-        print("hello class")
+        print("hello class object")
     
 
 def runner():
@@ -25,15 +25,17 @@ def runner():
         App.use 方法必须传入一个router，router内部可以嵌套子router，配置了后，路由从一级节点开始层层路由
     
     用例: 
-        * python test.py test.hello
-        * python test.py test.hello_class
+        * python test.py test.hello.func
+        * python test.py test.hello.obj
     '''
     app = App()
     app.use(
         router=Router(
             test=Router(
-                hello=hello,
-                hello_class=Hello()
+                hello=Router(
+                    func=hello,
+                    obj=Hello()
+                )
             )
         )
     )

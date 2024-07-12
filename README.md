@@ -6,31 +6,11 @@ Pyouter is a tasks router by  hierarchy and layered tasks, which may come from c
 
 ## INSTALL
 
-First, install pyouter
+install pyouter
 
 ```shell
 pip install pyouter
 ```
-
-and then, you can install your shell completion support
-
-```shell
-pyouter install.ohmyzsh
-```
-
-or
-
-```shell
-pyouter install.bash
-```
-
-or
-
-```shell
-pyouter install.fish
-```
-
-Default script name is `main.py` 。Now it support bash, fish and zsh with oh-my-zsh .
 
 ## What's new
 

@@ -12,6 +12,8 @@ install pyouter
 pip install pyouter
 ```
 
+* advanced: [install for shell completion support](./advanced.md)
+
 ## examples
 
 * [src/tests/test.py](src/tests/test.py)

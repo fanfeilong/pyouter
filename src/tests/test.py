@@ -20,14 +20,10 @@ class Hello:
         print(f"hello class object, self.options.debug:{self.options.debug}")
         if self.options.debug:
             print('debug')
-    
 
-def runner():
+if __name__=="__main__":
     '''
-    示例:
-        App.use 方法必须传入一个router，router内部可以嵌套子router，配置了后，路由从一级节点开始层层路由
-    
-    用例: 
+    Usage:
         * python test.py test.hello.func
         * python test.py test.hello.obj
     '''
@@ -54,6 +50,3 @@ def runner():
     
     print("run")
     app.run()
-    
-if __name__=="__main__":
-    runner()

@@ -1,5 +1,6 @@
 from .errors import NotFound
-
+import asyncio
+import inspect
 
 class Router(object):
     def __init__(self, **args):
@@ -15,21 +16,34 @@ class Router(object):
             if type(router) == type(self):
                 router.context(config, options)
 
-    def dispatch(self, command: str):
+    async def dispatch(self, command: str):
         if "." in command:
             crt, nxt = command.split('.', 1)
             if crt not in self.route:
                 raise NotFound(self.route, crt)
             if self.options.view:
                 print(f'->router: {crt}')
-            return self.route[crt].dispatch(nxt)
+            return await self.route[crt].dispatch(nxt)
         else:
             if self.options.view:
                 print(f'->action: {command}')
             if command not in self.route.keys():
                 raise NotFound(self.route, command)
 
-            return self.route[command](self.config, self.options)
+            leaf = self.route[command]
+            
+            if isinstance(leaf, Router):
+                print("router ...")
+                tasks = []
+                for key in leaf.route:
+                    task = asyncio.ensure_future(leaf.dispatch(key))
+                    tasks.append(task)
+                await asyncio.gather(*tasks, return_exceptions=True)
+            else:
+                if inspect.isfunction(leaf):
+                    return await leaf(self.config, self.options)
+                else:
+                    return await leaf.run(self.config, self.options)
 
     def tasks(self, base=None):
 

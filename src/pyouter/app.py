@@ -1,5 +1,7 @@
 
 from typing import Any
+import asyncio
+
 from pyouter.default import create_parser
 from pyouter.errors import NotInit
 from pyouter.router import Router
@@ -47,5 +49,5 @@ class App(object):
             for task in self.router.tasks():
                 print(task)
         else:
-            self.router.dispatch(self.options.actions)
+            asyncio.get_event_loop().run_until_complete(self.router.dispatch(self.options.actions))
         return self

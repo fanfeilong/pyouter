@@ -1,6 +1,9 @@
 from .errors import NotFound
 import asyncio
 import inspect
+import multiprocessing
+from .executor import run_in_executor
+from functools import partial
 
 class Router(object):
     def __init__(self, **args):
@@ -8,13 +11,14 @@ class Router(object):
         for key in args:
             self.route[key] = args[key]
 
-    def context(self, config, options):
+    def context(self, config, options, executor):
         self.config = config
         self.options = options
+        self.executor = executor
         for key in self.route:
             router = self.route[key]
             if type(router) == type(self):
-                router.context(config, options)
+                router.context(config, options, executor)
 
     async def dispatch(self, command: str):
         if "." in command:
@@ -36,14 +40,26 @@ class Router(object):
                 print("router ...")
                 tasks = []
                 for key in leaf.route:
-                    task = asyncio.ensure_future(leaf.dispatch(key))
+                    task = asyncio.create_task(leaf.dispatch(key))
                     tasks.append(task)
                 await asyncio.gather(*tasks, return_exceptions=True)
             else:
-                if inspect.isfunction(leaf):
-                    return await leaf(self.config, self.options)
-                else:
-                    return await leaf.run(self.config, self.options)
+                async def runner(config, options):
+                    if inspect.isfunction(leaf):
+                        return await leaf(config, options)
+                    else:
+                        return await leaf.run(config, options)
+                
+                def run(config, options):
+                    asyncio.run(runner(config, options))
+                
+                loop = asyncio.get_running_loop()
+                loop.run_until_complete(
+                    loop.run_in_executor(
+                        self.executor,
+                        partial(run, self.config, self.options),
+                    )
+                )
 
     def tasks(self, base=None):
 

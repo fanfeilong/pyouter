@@ -7,10 +7,12 @@ from pyouter.errors import NotInit
 from pyouter.router import Router
 
 class App(object):
-    def __init__(self, config=None):
-        opt_parser = create_parser("tasks router runner")
+    def __init__(self, config=None, parser=None):
+        opt_parser = parser if parser is not None else create_parser("tasks router runner")
+        
         self.opt_parser = opt_parser
         self.options = None
+        self.executor = None
         
         if config is None:
             self.config = {}
@@ -43,7 +45,7 @@ class App(object):
         if self.options is None:
             self.options = self.opt_parser.parse_args()
             
-        self.router.context(self.config, self.options)
+        self.router.context(self.config, self.options, self.executor)
 
         if self.options.tasks:
             for task in self.router.tasks():

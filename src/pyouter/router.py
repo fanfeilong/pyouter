@@ -1,9 +1,7 @@
-from .errors import NotFound
 import asyncio
-import inspect
-import multiprocessing
-from .executor import run_in_executor
-from functools import partial
+
+from .errors import NotFound
+from .executor import LeafExecutor
 
 class Router(object):
     def __init__(self, **args):
@@ -20,46 +18,51 @@ class Router(object):
             if type(router) == type(self):
                 router.context(config, options, executor)
 
-    async def dispatch(self, command: str):
+    async def dispatch(self, pre:str|None, command: str, depth: int):
+        show_path = self.options.inspect or self.options.view
+        path_prefix = '  '*depth if self.options.inspect else ''
+        run_action = not self.options.inspect
+        
+        def full_path(pre, command):
+            if pre is not None and pre!='':
+                return f'{pre}.{command}'
+            else:
+                return command
+        
         if "." in command:
             crt, nxt = command.split('.', 1)
             if crt not in self.route:
                 raise NotFound(self.route, crt)
-            if self.options.view:
-                print(f'->router: {crt}')
-            return await self.route[crt].dispatch(nxt)
+            
+            router_path = full_path(pre, crt)
+            if show_path:
+                print(f'[pyouter] {path_prefix}->router: {router_path}')
+            
+            return await self.route[crt].dispatch(router_path, nxt, depth+1)
         else:
-            if self.options.view:
-                print(f'->action: {command}')
             if command not in self.route.keys():
                 raise NotFound(self.route, command)
 
             leaf = self.route[command]
-            
             if isinstance(leaf, Router):
-                print("router ...")
                 tasks = []
-                for key in leaf.route:
-                    task = asyncio.create_task(leaf.dispatch(key))
+                for crt in leaf.route:
+                    router_path = full_path(pre, crt)
+                    if show_path:
+                        print(f'[pyouter] {path_prefix}->router: {router_path}')
+                        
+                    task = asyncio.create_task(leaf.dispatch(router_path, crt, depth+1))
                     tasks.append(task)
+                
                 await asyncio.gather(*tasks, return_exceptions=True)
             else:
-                async def runner(config, options):
-                    if inspect.isfunction(leaf):
-                        return await leaf(config, options)
-                    else:
-                        return await leaf.run(config, options)
+                action_path = full_path(pre, command)
+                if show_path:
+                    print(f'[pyouter] {path_prefix}->action: {action_path}')
                 
-                def run(config, options):
-                    asyncio.run(runner(config, options))
-                
-                loop = asyncio.get_running_loop()
-                loop.run_until_complete(
-                    loop.run_in_executor(
-                        self.executor,
-                        partial(run, self.config, self.options),
-                    )
-                )
+                if run_action:
+                    executor = LeafExecutor(self.config, self.options, self.executor, leaf)
+                    await executor.run()
 
     def tasks(self, base=None):
 

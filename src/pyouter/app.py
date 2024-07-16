@@ -51,5 +51,6 @@ class App(object):
             for task in self.router.tasks():
                 print(task)
         else:
-            asyncio.get_event_loop().run_until_complete(self.router.dispatch(self.options.actions))
+            asyncio.get_event_loop().run_until_complete(self.router.dispatch('', self.options.actions, 0))
+        
         return self

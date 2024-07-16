@@ -79,7 +79,10 @@ if __name__=="__main__":
 
 ## What's new
 
-### 0.0.8 (developing...)
+### 0.0.9
+* improve -v, --view, -i, --insepect option for path debug
+
+### 0.0.8
 
 * add app.option support
 * improve App(config=), support config patth

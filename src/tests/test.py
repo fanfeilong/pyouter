@@ -54,6 +54,15 @@ if __name__=="__main__":
         * python test.py test.hello.func
         * python test.py test.hello.obj
         * python test.py test
+        
+        sometimes, we only need to print the router and action path for debug, then u can use the -i or --inspect option,
+        which will print path with indent:
+        * python test.py test.hello -i
+        * python test.py test.hello --insepect
+        
+        or, u need to print path while execute the leaf action, then u can use the -v or --view option:
+        * python test.py test.hello -v
+        * python test.py test.hello --view
     '''
     
     app = App(
@@ -85,7 +94,6 @@ if __name__=="__main__":
         )
     )
     
-    print("run")
     app.run()
     
     

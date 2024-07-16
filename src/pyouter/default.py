@@ -32,7 +32,13 @@ def create_parser(description, tasks="tasks"):
         dest="view",
         help="view the router track",
         action="store_true",
-        # metavar="V"
+    )
+    
+    opt_parser.add_argument(
+        "-i", "--inspect",
+        dest="inspect",
+        help="inspect the router path",
+        action="store_true",
     )
 
     return opt_parser

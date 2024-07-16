@@ -13,7 +13,7 @@ setup(name="pyouter",
       long_description_content_type='text/markdown',
       author="Fan Fei Long",
       author_email="fanfeilong@gmail.com",
-      url="https://github.com/fainfeilong/task_router",
+      url="https://github.com/fanfeilong/pyouter",
       license="MIT",
       classifiers=[
           "Topic :: Utilities",

@@ -83,6 +83,8 @@ if __name__=="__main__":
 
 * add app.option support
 * improve App(config=), support config patth
+* add aysnc support
+* will execute all routers pallarent by using async ThreadPoolExecutor
 
 ### 0.0.7
 

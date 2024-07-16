@@ -5,6 +5,8 @@ from pyouter.router import Router
 import json
 import asyncio
 import time
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+
 
 async def hello(config, options):
     print("hello function")
@@ -51,7 +53,9 @@ if __name__=="__main__":
         * python test.py test.hello.obj
     '''
     
-    app = App(config='config.json')
+    app = App(
+        config='config.json',
+    )
     
     app.option(
         '-d', '--debug',
@@ -71,7 +75,8 @@ if __name__=="__main__":
                 hello2=hello,
                 hello3=Router(
                     func=hello_sync,
-                    obj=Hello_Sync(20),
+                    obj=Hello("world"),
+                    obj2=Hello_Sync(20),
                 )
             )
         )
@@ -79,3 +84,5 @@ if __name__=="__main__":
     
     print("run")
     app.run()
+    
+    

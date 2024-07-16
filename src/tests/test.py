@@ -5,7 +5,6 @@ from pyouter.router import Router
 import json
 import asyncio
 import time
-from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 
 
 async def hello(config, options):
@@ -51,16 +50,16 @@ class Hello_Sync:
 if __name__=="__main__":
     '''
     Usage:
+        ## execute:
         * python test.py test.hello.func
         * python test.py test.hello.obj
         * python test.py test
         
-        sometimes, we only need to print the router and action path for debug, then u can use the -i or --inspect option,
-        which will print path with indent:
+        ## dump router path only:
         * python test.py test.hello -i
         * python test.py test.hello --insepect
         
-        or, u need to print path while execute the leaf action, then u can use the -v or --view option:
+        ## dump router path and execute:
         * python test.py test.hello -v
         * python test.py test.hello --view
     '''

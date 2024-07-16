@@ -51,6 +51,7 @@ if __name__=="__main__":
     Usage:
         * python test.py test.hello.func
         * python test.py test.hello.obj
+        * python test.py test
     '''
     
     app = App(

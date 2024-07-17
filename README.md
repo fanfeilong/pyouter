@@ -79,7 +79,12 @@ if __name__=="__main__":
 
 ## What's new
 
+### 0.1.0
+
+* fix executor bug
+
 ### 0.0.9
+
 * improve -v, --view, -i, --insepect option for path debug
 
 ### 0.0.8

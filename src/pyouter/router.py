@@ -47,9 +47,9 @@ class Router(object):
             if isinstance(leaf, Router):
                 tasks = []
                 for crt in leaf.route:
-                    router_path = full_path(pre, crt)
+                    router_path = full_path(pre, command)
                     if show_path:
-                        print(f'[pyouter] {path_prefix}->router: {router_path}')
+                        print(f'[pyouter] {path_prefix}->router2: {router_path}')
                         
                     task = asyncio.create_task(leaf.dispatch(router_path, crt, depth+1))
                     tasks.append(task)

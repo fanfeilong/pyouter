@@ -14,26 +14,29 @@ class LeafExecutor:
         
     async def run(self):
         
-        async def runner(leaf, config, options):
+        def is_continufunction(leaf):
             if inspect.isfunction(leaf):
-                if inspect.iscoroutinefunction(leaf):
-                    return await leaf(config, options)
-                else:
-                    return leaf(config, options)
+                return inspect.iscoroutinefunction(leaf)
             else:
-                if inspect.iscoroutinefunction(leaf.run):
-                    return await leaf.run(config, options)
-                else:
-                    return leaf.run(config, options)
-        
+                return inspect.iscoroutinefunction(leaf.run)
+            
+        async def run_async(leaf, config, options):
+            if inspect.isfunction(leaf):
+                return await leaf(config, options)
+            else:
+                return await leaf.run(config, options)
+            
         def run_sync(leaf, config, options):
-            asyncio.run(runner(leaf, config, options))
+            if inspect.isfunction(leaf):
+                return leaf(config, options)
+            else:
+                return leaf.run(config, options)
         
-        loop = asyncio.get_running_loop()
-        loop.run_until_complete(
-            loop.run_in_executor(
+        if is_continufunction(self.leaf):
+            await run_async(self.leaf, self.config, self.options)
+        else:
+            loop = asyncio.get_running_loop()
+            await loop.run_in_executor(
                 self.executor,
                 partial(run_sync, self.leaf, self.config, self.options),
             )
-        )
-    

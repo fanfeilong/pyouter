@@ -17,7 +17,7 @@ class Hello:
     def __init__(self, value) -> None:
         self.value = value
     
-    # 如果是一个class，需要有 run(self, config, options) 成员函数
+    # Router class SHOULD provider method: `run(self, config, options)`
     async def run(self, config, options) -> Any:
         self.config = config
         self.options = options
@@ -34,7 +34,7 @@ class Hello_Sync:
     def __init__(self, value) -> None:
         self.value = value
     
-    # 如果是一个class，需要有 run(self, config, options) 成员函数
+    # Router class SHOULD provider method: `run(self, config, options)`
     def run(self, config, options) -> Any:
         self.config = config
         self.options = options
